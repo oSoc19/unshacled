@@ -1,24 +1,30 @@
 <template>
-    <v-stage :config="configKonva">
-        <v-layer>
-            <v-circle :config="configCircle"></v-circle>
-        </v-layer>
-    </v-stage>
+    <div id="container" style="background-color: lightgrey;">
+        <v-stage :config="configKonva" id="canvas">
+            <v-layer>
+                <v-circle :config="configCircle"></v-circle>
+            </v-layer>
+        </v-stage>
+    </div>
 </template>
 
 <script>
+    const width = 0.9 * window.innerWidth;
+    const height = 0.9 * window.innerHeight;
+
     export default {
         data() {
             return {
                 configKonva: {
-                    width: 200,
-                    height: 200
+                    width: width,
+                    height: height,
+                    container: 'container',
                 },
                 configCircle: {
                     x: 100,
                     y: 100,
                     radius: 70,
-                    fill: "red",
+                    fill: "white",
                     stroke: "black",
                     strokeWidth: 4
                 }
