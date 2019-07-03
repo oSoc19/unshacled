@@ -2,12 +2,12 @@
     <div>
         <v-group :draggable="true">
             <node-shape :pos-y=posY :pos-x=posX></node-shape>
-            <div v-for="(prop, index) in properties" v-bind:key="index">
+            <div v-for="(props, index) in properties" v-bind:key="counter">
+                <v-circle v-on:click=removeProperty(index) :config="getRemoveBtnConfig(index, posX)"></v-circle>
                 <property-shape :pos-y=calculatePropertyPlace(index) :pos-x=posX></property-shape>
             </div>
             <v-circle v-on:click=addProperty() :config=addBtnConfig></v-circle>
         </v-group>
-
     </div>
 </template>
 
@@ -23,21 +23,31 @@
         },
         data() {
             return {
+                counter: 0,
                 properties: [],
                 posX: 100,
                 posY: 100,
                 addBtnConfig: {
                     x: 225, y: 85, radius: 10,
-                    fill: "green", stroke: "black", strokeWidth: 4
-                }
+                    fill: "green", stroke: "black", strokeWidth: 1
+                },
             };
         },
         methods: {
             calculatePropertyPlace(index) {
                 return (this.posY + index * 40 + 50)
             },
+            getRemoveBtnConfig(index, x) {
+                const y = this.calculatePropertyPlace(index);
+                return {x: x - 10, y: y + 20, radius: 5, fill: "red", stroke: "black", strokeWidth: 1};
+            },
             addProperty() {
+                this.counter += 1;
                 this.properties.push(NodeShape);
+            },
+            removeProperty(nodeShape) {
+                const index = this.properties.indexOf(nodeShape);
+                this.properties.splice(index, 1);
             }
         }
     };
