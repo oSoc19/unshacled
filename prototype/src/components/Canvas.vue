@@ -3,7 +3,10 @@
         <v-stage ref="stage" @wheel="scroll" :config="configKonva" id="canvas" style="background-color: lightgrey;">
             <v-layer>
                 <div v-for="(prop, index) in nodes" v-bind:key="index">
-                    <parent-shape></parent-shape>
+                    <v-group :draggable="true">
+                        <parent-shape></parent-shape>
+                        <v-circle v-on:click=removeParent() :config=rmvBtnConfig></v-circle>
+                    </v-group>
                 </div>
             </v-layer>
         </v-stage>
@@ -19,7 +22,7 @@
     const height = 0.9 * window.innerHeight;
 
     export default {
-        components:{
+        components: {
             ParentShape,
             ShapeAdder
         },
@@ -30,23 +33,32 @@
                     height: height,
                 },
                 configRect: {
-                    x: 100,
-                    y: 100,
-                    width: 300,
-                    height:50,
-                    fill: "white",
-                    stroke: "black",
-                    strokeWidth: 4
+                    x: 100, y: 100,
+                    width: 300, height: 50,
+                    fill: "white", stroke: "black", strokeWidth: 4
                 },
-                nodes: []
+                nodes: [],
+                map: {},
+                counter: 0,
+                rmvBtnConfig: {
+                    x: 370, y: 138, radius: 10,
+                    fill: "red", stroke: "black", strokeWidth: 1
+                },
             };
         },
         methods: {
-            createShape: function () {
-                this.nodes.push(ParentShape);
+            createShape() {
+                const p = ParentShape;
+                this.nodes.push(p);
+                this.counter += 1;
+                this.map[p] = this.counter;
                 this.$refs.stage.getNode().draw();
             },
-            scroll: function (e) {
+            removeParent(key) {
+                const index = this.nodes.indexOf(this.map[key]);
+                this.nodes.splice(index, 1);
+            },
+            scroll(e) {
                 const stage = this.$refs.stage.getNode();
                 const scaleBy = 1.01;
                 const oldScale = stage.scaleX();
@@ -58,7 +70,7 @@
                 };
 
                 const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-                stage.scale({ x: newScale, y: newScale });
+                stage.scale({x: newScale, y: newScale});
 
                 const newPos = {
                     x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
