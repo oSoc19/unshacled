@@ -1,8 +1,10 @@
 <template>
     <div>
-        <v-stage ref="stage" :config="configKonva" id="canvas" style="background-color: lightgrey;">
+        <v-stage ref="stage" @wheel="scroll" :config="configKonva" id="canvas" style="background-color: lightgrey;">
             <v-layer>
-                <parent-shape></parent-shape>        
+                <div v-for="(prop, index) in nodes" v-bind:key="index">
+                    <parent-shape></parent-shape>
+                </div>
             </v-layer>
         </v-stage>
         <ShapeAdder @add-shape="createShape()"></ShapeAdder>
@@ -11,7 +13,6 @@
 
 <script>
     import ShapeAdder from './ShapeAdder.vue';
-    import Konva from 'konva';
     import ParentShape from './Shapes/ParentShape.vue'
 
     const width = 0.9 * window.innerWidth;
@@ -36,31 +37,35 @@
                     fill: "white",
                     stroke: "black",
                     strokeWidth: 4
-                }
+                },
+                nodes: []
             };
         },
         methods: {
             createShape: function () {
+                this.nodes.push(ParentShape);
+                this.$refs.stage.getNode().draw();
+            },
+            scroll: function (e) {
                 const stage = this.$refs.stage.getNode();
-                let layer = new Konva.Layer();
-                let group = new Konva.Group();
-                group.setDraggable(true);
-                let red = new Konva.Circle({
-                    x: 200, y: 100, radius: 50,
-                    fill: "red", stroke: "black", strokeWidth: 4,
-                    // draggable: true,
-                });
-                let blue = new Konva.Circle({
-                    x: 100, y: 200, radius: 50,
-                    fill: "blue", stroke: "black", strokeWidth: 4,
-                    // draggable: true,
-                });
-                group.add(red);
-                group.add(blue);
+                const scaleBy = 1.01;
+                const oldScale = stage.scaleX();
+                e.evt.preventDefault();
 
-                layer.add(group);
-                stage.add(layer);
-                stage.draw();
+                const mousePointTo = {
+                    x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+                    y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale
+                };
+
+                const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+                stage.scale({ x: newScale, y: newScale });
+
+                const newPos = {
+                    x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+                    y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
+                };
+                stage.position(newPos);
+                stage.batchDraw();
             }
         },
     };
