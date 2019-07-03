@@ -72,9 +72,7 @@
                         document.getElementById("textarea").remove();
                     }
                     // on esc do not set value back to node
-                    if (e.keyCode === 27) {
-                        removeTextarea();
-                    }
+                   
                 });
             }
         }

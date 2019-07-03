@@ -1,7 +1,8 @@
 <template>
     <div>
+        
         <v-rect :config="configRectangle"></v-rect>
-        <v-text :config="configText" v-on:click="changetext"></v-text>
+        <v-text ref="node" :config="configText" v-on:click="changetext"></v-text>
     </div>
 </template>
 
@@ -40,16 +41,22 @@
             changetext() {
 
                 let configText = this.configText;
-
+                let node = this.$refs.node;
+            
                 let textarea = document.createElement("textarea");
+                let rect = textarea.getBoundingClientRect();
+                let bodrect = document.body.getBoundingClientRect();
+               
+               let height = node.clientHeight;
                 document.body.append(textarea);
+               
                 textarea.id = "textarea";
                 textarea.textContent = configText.text;
                 textarea.width = configText.width;
-                textarea.style.bottom = configText.y + "px";
-                textarea.style.left = configText.x + "px";
+                textarea.style.bottom = rect.bottom + "px";
+                textarea.style.left = rect.left+ "px";
                 textarea.style.position = "absolute";
-                textarea.style.height = this.configRectangle.height + "px";
+                textarea.style.height = height + "px";
                 textarea.style.top = configText.y + "px";
                 textarea.style.left = configText.x + "px";
                 textarea.style.width = configText.width + "px";
@@ -72,9 +79,7 @@
                         document.getElementById("textarea").remove();
                     }
                     // on esc do not set value back to node
-                    if (e.keyCode === 27) {
-                        removeTextarea();
-                    }
+                    
                 });
             }
         }

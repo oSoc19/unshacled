@@ -36,7 +36,10 @@
             this.addBtnConfig.x = this.posX +125;
             this.addBtnConfig.y = this.posY -25;
         },
-
+        updated(){
+            console.log(this.posX)
+        }
+,
         methods: {
             calculatePropertyPlace(index) {
                 return (this.posY + index * 40 + 50)
