@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-stage ref="stage" :config="configKonva" id="canvas" style="background-color: lightgrey;">
+        <v-stage ref="stage" @wheel="scroll" :config="configKonva" id="canvas" style="background-color: lightgrey;">
             <v-layer>
                 <div v-for="(prop, index) in nodes" v-bind:key="index">
                     <parent-shape></parent-shape>
@@ -13,7 +13,6 @@
 
 <script>
     import ShapeAdder from './ShapeAdder.vue';
-    // import Konva from 'konva';
     import ParentShape from './Shapes/ParentShape.vue'
 
     const width = 0.9 * window.innerWidth;
@@ -45,8 +44,28 @@
         methods: {
             createShape: function () {
                 this.nodes.push(ParentShape);
-                // const stage = this.$refs.stage.getNode();
                 this.$refs.stage.getNode().draw();
+            },
+            scroll: function (e) {
+                const stage = this.$refs.stage.getNode();
+                const scaleBy = 1.01;
+                const oldScale = stage.scaleX();
+                e.evt.preventDefault();
+
+                const mousePointTo = {
+                    x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+                    y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale
+                };
+
+                const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+                stage.scale({ x: newScale, y: newScale });
+
+                const newPos = {
+                    x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+                    y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
+                };
+                stage.position(newPos);
+                stage.batchDraw();
             }
         },
     };
