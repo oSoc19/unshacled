@@ -2,17 +2,22 @@
     <div id="container" style="background-color: lightgrey;">
         <v-stage :config="configKonva" id="canvas">
             <v-layer>
-                <v-circle :config="configCircle"></v-circle>
+                <parent-shape></parent-shape>        
             </v-layer>
         </v-stage>
     </div>
 </template>
 
 <script>
+    import ParentShape from './Shapes/ParentShape.vue'
+
     const width = 0.9 * window.innerWidth;
     const height = 0.9 * window.innerHeight;
 
     export default {
+        components:{
+            ParentShape
+        },
         data() {
             return {
                 configKonva: {
@@ -20,10 +25,11 @@
                     height: height,
                     container: 'container',
                 },
-                configCircle: {
+                configRect: {
                     x: 100,
                     y: 100,
-                    radius: 70,
+                    width: 300,
+                    height:50,
                     fill: "white",
                     stroke: "black",
                     strokeWidth: 4
