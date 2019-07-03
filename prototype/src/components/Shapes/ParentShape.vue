@@ -25,15 +25,19 @@ import PropertyShape from './PropertyShape'
                 properties:[
                   NodeShape,
                 ],
-                posX:100,
-                posY:100,
+                posX:300,
+                posY:200,
 
                 addBtnConfig:{
-                    x: 225, y: 85, radius: 10,
+                    x: 125, y: 85, radius: 10,
                     fill: "green", stroke: "black", strokeWidth: 4
                 }
  
             };
+        },
+        created(){
+            this.addBtnConfig.x = this.posX +125;
+            this.addBtnConfig.y = this.posY -25;
         },
 
         methods:{
