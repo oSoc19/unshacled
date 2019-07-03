@@ -1,5 +1,5 @@
 <template>
-    <v-group>
+    <v-group :draggable="true">
         <node-shape :pos-y=posY :pos-x=posX></node-shape>
        
         <div v-for="(prop,index) in properties" v-bind:key="index">
@@ -25,10 +25,7 @@ import PropertyShape from './PropertyShape'
                 ],
                 posX:100,
                 posY:100
-
-
-                
-               
+ 
             };
         },
 
