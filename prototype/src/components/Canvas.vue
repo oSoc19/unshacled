@@ -37,16 +37,22 @@
             createShape: function () {
                 const stage = this.$refs.stage.getNode();
                 let layer = new Konva.Layer();
-                let item = new Konva.Circle({
-                    x: 200,
-                    y: 100,
-                    radius: 70,
-                    fill: "red",
-                    stroke: "black",
-                    strokeWidth: 4,
-                    draggable: true,
+                let group = new Konva.Group();
+                group.setDraggable(true);
+                let red = new Konva.Circle({
+                    x: 200, y: 100, radius: 50,
+                    fill: "red", stroke: "black", strokeWidth: 4,
+                    // draggable: true,
                 });
-                layer.add(item);
+                let blue = new Konva.Circle({
+                    x: 100, y: 200, radius: 50,
+                    fill: "blue", stroke: "black", strokeWidth: 4,
+                    // draggable: true,
+                });
+                group.add(red);
+                group.add(blue);
+
+                layer.add(group);
                 stage.add(layer);
                 stage.draw();
             }
