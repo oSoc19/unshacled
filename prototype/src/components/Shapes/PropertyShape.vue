@@ -12,20 +12,15 @@
         data() {
             return {
                 configRectangle: {
-                    x: 0,
-                    y: 0,
-                    width: 250,
-                    height: 40,
-                    fill: "lightgray",
-                    stroke: "black",
-                    strokeWidth: 4
+                    x: 0, y: 0,
+                    width: 250, height: 40,
+                    fill: "white", stroke: "black", strokeWidth: 2
                 },
                 configText: {
-                    text: "example",
+                    text: "Property",
                     size: 20,
                     align: "center",
-                    x: 0,
-                    y: 0,
+                    x: 0, y: 0,
                     width: 200
                 },
             };
@@ -34,11 +29,10 @@
             this.configRectangle.x = Number.parseInt(this.posX);
             this.configRectangle.y = Number.parseInt(this.posY);
             this.configText.x = this.posX + 25;
-            this.configText.y = Number.parseInt(this.posY + 20);
+            this.configText.y = Number.parseInt(this.posY + 15);
         },
         methods: {
             changetext() {
-
                 let configText = this.configText;
 
                 let textarea = document.createElement("textarea");
@@ -50,8 +44,8 @@
                 textarea.style.left = configText.x + "px";
                 textarea.style.position = "absolute";
                 textarea.style.height = this.configRectangle.height + "px";
-                textarea.style.top = configText.y + "px";
-                textarea.style.left = configText.x + "px";
+                textarea.style.top = this.configText.y + "px";
+                textarea.style.left = this.configText.x + "px";
                 textarea.style.width = configText.width + "px";
                 textarea.style.fontSize = configText.fontSize + "px";
                 textarea.style.border = "none";
@@ -72,7 +66,6 @@
                         document.getElementById("textarea").remove();
                     }
                     // on esc do not set value back to node
-                   
                 });
             }
         }

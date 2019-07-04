@@ -28,26 +28,25 @@
                 posX: 100,
                 posY: 100,
                 addBtnConfig: {
-                    x: 370, y: 112, radius: 10,
+                    radius: 10,
                     fill: "green", stroke: "black", strokeWidth: 1
                 },
             };
         },
         created(){
-            this.addBtnConfig.x = this.posX +125;
-            this.addBtnConfig.y = this.posY -25;
+            this.addBtnConfig.x = this.posX + 270;
+            this.addBtnConfig.y = this.posY + 10;
         },
-        updated(){
-            console.log(this.posX)
-        }
-,
         methods: {
             calculatePropertyPlace(index) {
                 return (this.posY + index * 40 + 50)
             },
             getRmvPropBtnConfig(index, x) {
                 const y = this.calculatePropertyPlace(index);
-                return {x: x - 10, y: y + 20, radius: 5, fill: "red", stroke: "black", strokeWidth: 1};
+                return {
+                    x: x - 15, y: y + 20, radius: 5,
+                    fill: "red", stroke: "black", strokeWidth: 1
+                };
             },
             addProperty() {
                 this.counter += 1;

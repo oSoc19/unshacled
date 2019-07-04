@@ -1,6 +1,5 @@
 <template>
     <div>
-        
         <v-rect :config="configRectangle"></v-rect>
         <v-text ref="node" :config="configText" v-on:click="changetext"></v-text>
     </div>
@@ -13,20 +12,15 @@
         data() {
             return {
                 configRectangle: {
-                    x: 0,
-                    y: 0,
-                    height: 50,
-                    width: 250,
-                    fill: "white",
-                    stroke: "black",
-                    strokeWidth: 4,
+                    x: 0, y: 0,
+                    height: 50, width: 250,
+                    fill: "white", stroke: "black", strokeWidth: 3,
                 },
                 configText: {
-                    text: "feozrsfizefeqfoeafo^p^",
+                    text: "Alice",
                     size: 20,
                     align: "center",
-                    x: 0,
-                    y: 0,
+                    x: 0, y: 0,
                     width: 200
                 }
             };
