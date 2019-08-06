@@ -1,5 +1,4 @@
 const dictionary = {
-
   SHACL: {
     "https://2019.summerofcode.be/unshacled#AbstractResult":
       "http://www.w3.org/ns/shacl#AbstractResult",

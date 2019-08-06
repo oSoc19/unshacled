@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { ETF } from "../util/enums/extensionToFormat";
 import ParserManager from "../parsing/parserManager";
 import SerializerManager from "../parsing/serializerManager";

@@ -3,7 +3,7 @@ import language from "../util/enums/languages";
 /**
  *  TranslatorManager assigns translation tasks to the correct translator
  */
-export class TranslatorManager {
+class TranslatorManager {
   /**
    * Translates from a constraint language to internal used model
    * @param doc Document in JSON-LD
@@ -40,3 +40,5 @@ export class TranslatorManager {
     }
   }
 }
+
+export { TranslatorManager as default };

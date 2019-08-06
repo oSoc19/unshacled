@@ -29,9 +29,6 @@ const jsonldSHACL = [
 ];
 
 test("json-ld to turtle", async () => {
-  const turtle = await N3Serializer.serialize(
-    jsonldSHACL,
-    "text/turtle"
-  );
+  const turtle = await N3Serializer.serialize(jsonldSHACL, "text/turtle");
   expect(turtle).toBe(ttlShacl);
 });

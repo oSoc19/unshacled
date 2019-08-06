@@ -19,6 +19,10 @@ let getReady = function() {
   });
 };
 
+/**
+ * Simplify the constraints of the given object.
+ * @param obj
+ */
 function simplifyCons(obj) {
   const constraint = {};
   constraint.comment = obj[
@@ -36,6 +40,10 @@ function simplifyCons(obj) {
   return constraint;
 }
 
+/**
+ * Simplify the parameters of the given object.
+ * @param obj
+ */
 function simplifyParameter(obj) {
   const parameter = {};
   const constraint = initialConstraints

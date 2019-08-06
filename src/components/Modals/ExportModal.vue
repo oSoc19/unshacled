@@ -30,8 +30,6 @@
 </template>
 
 <script>
-import { ETF } from "../../util/enums/extensionToFormat";
-
 export default {
   name: "ExportModal",
   data() {
