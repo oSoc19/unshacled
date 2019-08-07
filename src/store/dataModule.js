@@ -138,4 +138,4 @@ const dataModule = {
   }
 };
 
-export { dataModule as default };
+export default dataModule;

@@ -5878,4 +5878,4 @@ const shacl = [
   }
 ];
 
-export { shacl as default };
+export default shacl;

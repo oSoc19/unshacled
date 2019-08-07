@@ -374,4 +374,4 @@ const constraintModule = {
   }
 };
 
-export { constraintModule as default };
+export default constraintModule;

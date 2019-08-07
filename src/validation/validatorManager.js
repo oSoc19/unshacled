@@ -4,7 +4,7 @@ import languages from "../util/enums/languages";
 /**
  *  ValidatorManager assigns validation tasks to the correct translator
  */
-export default class ValidatorManager {
+class ValidatorManager {
   /**
    * TODO support multiple formats (ttl, n3, ...)
    * @param data Data in turtle
@@ -24,3 +24,5 @@ export default class ValidatorManager {
     }
   }
 }
+
+export default ValidatorManager;

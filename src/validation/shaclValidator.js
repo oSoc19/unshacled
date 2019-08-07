@@ -3,7 +3,7 @@ const SHACLValidator = require("shacl-js");
 /**
  *  Validator class for SHACL
  */
-export default class ShaclValidator {
+class ShaclValidator {
   /**
    * Validates SHACL data using shapes
    * @param data Data in turtle
@@ -24,3 +24,5 @@ export default class ShaclValidator {
     });
   }
 }
+
+export default ShaclValidator;

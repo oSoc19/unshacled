@@ -167,7 +167,7 @@ module.exports = {
     // Avoid using hard-coded numbers, use constants instead
     "no-magic-numbers": [
       "warn",
-      { enforceConst: true, ignore: [-1, 0, 1, 2, 4], ignoreArrayIndexes: true }
+      { enforceConst: true, ignore: [-1, 0, 1, 2, 4, 10], ignoreArrayIndexes: true }
     ],
 
     // Disallow `var a = b = c = 1`

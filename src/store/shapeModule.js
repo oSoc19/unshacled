@@ -333,4 +333,4 @@ const shapeModule = {
   }
 };
 
-export { shapeModule as default };
+export default shapeModule;

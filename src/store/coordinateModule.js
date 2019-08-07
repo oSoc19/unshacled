@@ -132,4 +132,4 @@ const coordinateModule = {
   }
 };
 
-export { coordinateModule as default };
+export default coordinateModule;

@@ -1763,4 +1763,4 @@ EXAMPLES.model.forEach(e =>
     }
   })
 );
-export { EXAMPLES as default };
+export default EXAMPLES;

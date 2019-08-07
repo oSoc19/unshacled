@@ -224,4 +224,4 @@ export const TERM = {
   zeroOrOnePath: `${CUSTOM_URI}zeroOrOnePath`
 };
 
-export { TERM as default };
+export default TERM;

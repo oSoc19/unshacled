@@ -889,4 +889,4 @@ const dictionary = {
   }
 };
 
-export { dictionary as default };
+export default dictionary;
