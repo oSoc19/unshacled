@@ -24,6 +24,7 @@ export default new Vuex.Store({
     editor: null,
     showNodeShapeModal: false,
     showClearModal: false,
+    showImportModal: false,
     showExportModal: false,
     exportType: ""
   },
@@ -71,6 +72,20 @@ export default new Vuex.Store({
       state.showClearModal = !state.showClearModal;
     },
 
+    /**
+     * Toggle the visibility of the import modal.
+     * @param state
+     */
+    toggleImportModal(state) {
+      event.preventDefault();
+      state.showImportModal = !state.showImportModal;
+    },
+
+    /**
+     * Toggle the visibility of the export modal.
+     * @param state
+     * @param type the export type
+     */
     toggleExportModal(state, type) {
       this.state.exportType = type;
       event.preventDefault();

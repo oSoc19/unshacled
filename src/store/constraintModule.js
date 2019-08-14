@@ -447,7 +447,7 @@ const constraintModule = {
       const constraints = getters.shapeConstraints(shapeID);
       for (const c of Object.keys(constraints)) {
         const vt = getValueType(c);
-        if (vt.includes("id")) {
+        if (vt && vt.includes("id")) {
           const values = [];
           const iter = vt.includes("List")
             ? constraints[c][0]["@list"]

@@ -10,7 +10,7 @@
               ref="importShapes"
               type="file"
               style="display: none"
-              @change="readTextFile()"
+              @change="toggleImportModal()"
             />
           </sui-dropdown-item>
 
@@ -70,6 +70,7 @@
     </sui-menu>
 
     <clear-modal></clear-modal>
+    <import-modal :on-confirm="uploadSchemaFile"></import-modal>
     <export-modal></export-modal>
     <validation-report-modal
       :report="this.$store.state.mData.validationReport"
@@ -92,10 +93,12 @@ import PredicateModal from "./Modals/PredicateModal.vue";
 import ExportModal from "./Modals/ExportModal.vue";
 
 import languages from "../util/enums/languages";
+import ImportModal from "./Modals/ImportModal";
 
 export default {
   name: "NavBar",
   components: {
+    ImportModal,
     ExportModal,
     ClearModal,
     SuiDropdownDivider,
@@ -114,6 +117,9 @@ export default {
     toggleClearModal() {
       this.$store.commit("toggleClearModal");
     },
+    toggleImportModal() {
+      this.$store.commit("toggleImportModal");
+    },
     createNodeShape() {
       this.$store.dispatch("addNodeShape", this.uuid());
     },
@@ -125,16 +131,16 @@ export default {
       this.$store.dispatch("loadExample");
     },
 
-    readTextFile() {
+    uploadSchemaFile(override) {
       const file = document.getElementById("file").files[0];
-      this.$store.dispatch("uploadSchemaFile", file);
-    },
-    exportFile(type) {
-      this.$store.commit("toggleExportModal", type);
+      this.$store.dispatch("uploadSchemaFile", { file, override });
     },
     uploadDataFile() {
       const file = document.getElementById("dataFile").files[0];
       this.$store.dispatch("uploadDataFile", file);
+    },
+    exportFile(type) {
+      this.$store.commit("toggleExportModal", type);
     },
     dataFileUploaded() {
       return this.$store.state.mData.dataFile.length > 0;

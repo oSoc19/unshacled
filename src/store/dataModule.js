@@ -82,9 +82,10 @@ const dataModule = {
     /**
      * Takes a file, reads the extension and depending on the format uses the correct parser to turn it into an intern model
      * @param _
-     * @param file The uploaded file
+     * @param args
      * */
-    uploadSchemaFile(_, file) {
+    uploadSchemaFile(_, args) {
+      const { file, override } = args;
       const reader = new FileReader();
       const fileExtension = file.name.split(".").pop();
       const type = ETF[fileExtension];
@@ -93,7 +94,7 @@ const dataModule = {
       reader.readAsText(file);
       reader.onload = function(event) {
         ParserManager.parse(event.target.result, type).then(e => {
-          self.dispatch("updateModel", e);
+          self.dispatch("updateModel", { model: e, override });
         });
       };
     },
@@ -101,11 +102,17 @@ const dataModule = {
     /**
      * Set the model to the given one.
      * @param commit
-     * @param getters
-     * @param model
+     * @param dispatch
+     * @param rootGetters
+     * @param args
      */
-    updateModel({ commit, rootGetters }, model) {
-      commit("setModel", { model, getters: rootGetters }, { root: true });
+    updateModel({ commit, dispatch, rootGetters }, args) {
+      const { model, override } = args;
+      if (override) {
+        commit("setModel", { model, getters: rootGetters }, { root: true });
+      } else {
+        dispatch("appendModel", { model, getters: rootGetters });
+      }
     },
 
     /**

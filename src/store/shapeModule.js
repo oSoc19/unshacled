@@ -37,8 +37,7 @@ const shapeModule = {
      * @param args
      */
     setModel(state, args) {
-      const { model } = args;
-      const { getters } = args;
+      const { model, getters } = args;
 
       // Parse the model if necessary.
       state.model = JSON.stringify(model).includes(SHACL_URI)
@@ -160,6 +159,45 @@ const shapeModule = {
     }
   },
   actions: {
+    /**
+     * Append the given model to the current model.
+     * @param state
+     * @param commit
+     * @param getters
+     * @param args
+     */
+    appendModel({ state, commit, getters }, args) {
+      const newModel = shaclToInternal(args.model);
+      const currentKeys = state.model.map(obj => obj["@id"]);
+      const newKeys = newModel.map(obj => obj["@id"]);
+
+      // Check every key of the current model.
+      for (const key of currentKeys) {
+        const shape = getters.shapeWithID(key);
+
+        if (shape[TERM.path] && shape[TERM.path][0]["@id"]) {
+          const path = shape[TERM.path][0]["@id"];
+
+          let index = -1;
+          for (const i in newModel) {
+            const shape = newModel[i];
+            if (shape[TERM.path] && shape[TERM.path][0]["@id"] === path) {
+              index = i;
+              break; // Stop if the index is found.
+            }
+          }
+          // Is there a shape with the same path?
+          if (index === -1) {
+            newModel.push(shape);
+          }
+        } else if (!newKeys.includes(key)) {
+          // If the new model does not have this shape, add it.
+          newModel.push(shape);
+        }
+      }
+      commit("setModel", { model: newModel, getters });
+    },
+
     /* ADD ========================================================================================================== */
 
     /**
@@ -363,6 +401,21 @@ const shapeModule = {
     shapeWithID: state => id => {
       for (const item of state.model) {
         if (item["@id"] === id) return item;
+      }
+      return null;
+    },
+
+    /**
+     * TODO
+     * @param state
+     * @param getters
+     * @returns {Function}
+     */
+    idWithPath: (state, getters) => path => {
+      for (const shape of Object.values(getters.propertyShapes)) {
+        if (shape[TERM.path] && shape[TERM.path][0]["@id"] === path) {
+          return shape["@id"];
+        }
       }
       return null;
     },
